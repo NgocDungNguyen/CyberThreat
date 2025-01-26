@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cybersecurity Attack Simulations for Beginners</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .packet { position: absolute; width: 8px; height: 8px; background-color: red; border-radius: 50%; transition: all 0.5s linear; }
+        .data-packet { transition: all 0.5s linear; }
+        .code-font { font-family: 'Courier New', Courier, monospace; }
+        @keyframes shake { 
+            0%, 100% { transform: translateX(0); } 
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); } 
+            20%, 40%, 60%, 80% { transform: translateX(5px); } 
+        }
+        .file { transition: all 0.3s ease; }
+        .infected { background-color: #FFA500; }
+        .encrypted { background-color: #FF0000; }
+        .computer { transition: all 0.3s ease; }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Navigation -->
+    <nav class="bg-gray-800 text-white p-4 sticky top-0 z-50">
+        <div class="container mx-auto">
+            <h1 class="text-2xl font-bold mb-4">Cybersecurity Attack Simulations</h1>
+            <div class="flex flex-wrap gap-4">
+                <a href="#ddos" class="hover:text-gray-300 px-3 py-2 rounded-md bg-gray-700">DDoS</a>
+                <a href="#malware" class="hover:text-gray-300 px-3 py-2 rounded-md bg-gray-700">Malware</a>
+                <a href="#ransomware" class="hover:text-gray-300 px-3 py-2 rounded-md bg-gray-700">Ransomware</a>
+                <a href="#phishing" class="hover:text-gray-300 px-3 py-2 rounded-md bg-gray-700">Phishing</a>
+                <a href="#mitm" class="hover:text-gray-300 px-3 py-2 rounded-md bg-gray-700">MitM</a>
+                <a href="#sql-injection" class="hover:text-gray-300 px-3 py-2 rounded-md bg-gray-700">SQL Injection</a>
+                <a href="#xss" class="hover:text-gray-300 px-3 py-2 rounded-md bg-gray-700">XSS</a>
+                <a href="#credential-stuffing" class="hover:text-gray-300 px-3 py-2 rounded-md bg-gray-700">Credential Stuffing</a>
+                <a href="#social-engineering" class="hover:text-gray-300 px-3 py-2 rounded-md bg-gray-700">Social Engineering</a>
+                <a href="#zero-day" class="hover:text-gray-300 px-3 py-2 rounded-md bg-gray-700">Zero-Day</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto p-4">
+        <!-- Introduction Section -->
+        <section class="mb-16">
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Welcome to Cybersecurity Attack Simulations</h2>
+                <p class="text-gray-600 mb-6">
+                    This interactive platform helps you understand various types of cyber attacks through visual simulations.
+                    Each simulation demonstrates how attacks work and how they can be prevented.
+                </p>
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-4">
+                    <h3 class="font-semibold text-blue-700 mb-2">How to Use</h3>
+                    <p class="text-sm text-blue-600">
+                        Navigate through different attack types using the menu above. Each section includes:
+                        <ul class="list-disc list-inside mt-2">
+                            <li>Basic explanation of the attack</li>
+                            <li>Interactive simulation</li>
+                            <li>Prevention techniques</li>
+                            <li>Real-time visualization of attack impact</li>
+                        </ul>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- DDoS Attack Section -->
+        <section id="ddos" class="mb-16">
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">DDoS Attack: Distributed Denial of Service</h2>
+                <p class="text-gray-600 mb-6">A DDoS attack aims to make a website or online service unavailable by overwhelming it with traffic from multiple sources.</p>
+                
+                <!-- Key Concepts for DDoS -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <h3 class="font-semibold text-blue-700 mb-2">What is a Server?</h3>
+                        <p class="text-sm text-blue-600">A server is a computer that provides data or services to other computers over a network. Imagine it as a waiter in a restaurant, serving information to customers (other computers).</p>
+                        <div id="serverDemo" class="mt-4 h-32 bg-white rounded-lg flex items-center justify-center">
+                            <div class="w-16 h-16 bg-blue-500 rounded-lg flex items-center justify-center text-white text-2xl">
+                                <i class="fas fa-server"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <h3 class="font-semibold text-green-700 mb-2">What is Server Load?</h3>
+                        <p class="text-sm text-green-600">Server load is how busy a server is. Like a waiter handling many tables, high load means the server is struggling to keep up with requests.</p>
+                        <div id="loadDemo" class="mt-4 h-32 bg-white rounded-lg flex items-center justify-center">
+                            <div class="w-48 bg-gray-200 rounded-full h-4">
+                                <div id="loadBar" class="bg-green-500 h-4 rounded-full" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg">
+                        <h3 class="font-semibold text-yellow-700 mb-2">What is Network Bandwidth?</h3>
+                        <p class="text-sm text-yellow-600">Bandwidth is like the width of a pipe. It determines how much data can flow through a network connection at once.</p>
+                        <div id="bandwidthDemo" class="mt-4 h-32 bg-white rounded-lg flex items-center justify-center">
+                            <div class="w-48 h-8 bg-gray-200 rounded-full relative overflow-hidden">
+                                <div id="bandwidthFlow" class="absolute inset-0 bg-yellow-500" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-red-50 p-4 rounded-lg">
+                        <h3 class="font-semibold text-red-700 mb-2">What is Response Time?</h3>
+                        <p class="text-sm text-red-600">Response time is how long it takes for a server to respond to a request. Like waiting for a waiter to take your order, longer times mean slower service.</p>
+                        <div id="responseDemo" class="mt-4 h-32 bg-white rounded-lg flex items-center justify-center">
+                            <div id="responseTime" class="text-3xl font-bold text-red-500">0ms</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DDoS Simulation -->
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">DDoS Attack Simulation</h3>
+                <p class="text-gray-600 mb-6">Now that you understand the key concepts, let's see how a DDoS attack affects a server.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="packetRate" class="block text-sm font-medium text-gray-700 mb-2">Packets per Second:</label>
+                        <input type="range" id="packetRate" min="10" max="1000" value="100" class="w-full">
+                        <span id="packetRateValue" class="text-sm text-gray-600">100</span>
+                    </div>
+                    <div>
+                        <label for="attackerCount" class="block text-sm font-medium text-gray-700 mb-2">Number of Attackers:</label>
+                        <input type="range" id="attackerCount" min="1" max="100" value="10" class="w-full">
+                        <span id="attackerCountValue" class="text-sm text-gray-600">10</span>
+                    </div>
+                </div>
+                <div id="ddosSimulationArea" class="relative h-80 bg-gray-200 rounded-lg overflow-hidden mb-6">
+                    <div id="server" class="absolute bottom-4 left-1/2 transform -translate-x-1/2">
+                        <img src="https://replicate.delivery/xezq/BwZ62PeJyDQhIa2jramNV7HaijG1LgjExD4mi7unIAYOfpIUA/out-0.png" alt="A computer server icon representing the target of the DDoS attack" class="w-24 h-24">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h3 class="font-semibold mb-2">Server Load</h3>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div id="serverLoadBar" class="bg-red-600 h-2.5 rounded-full" style="width: 0%"></div>
+                        </div>
+                        <span id="serverLoadValue" class="text-sm text-gray-600">0%</span>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h3 class="font-semibold mb-2">Network Bandwidth</h3>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div id="bandwidthBar" class="bg-yellow-400 h-2.5 rounded-full" style="width: 0%"></div>
+                        </div>
+                        <span id="bandwidthValue" class="text-sm text-gray-600">0 Mbps</span>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h3 class="font-semibold mb-2">Response Time</h3>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div id="responseTimeBar" class="bg-green-500 h-2.5 rounded-full" style="width: 0%"></div>
+                        </div>
+                        <span id="responseTimeValue" class="text-sm text-gray-600">0 ms</span>
+                    </div>
+                </div>
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+                    <h3 class="font-semibold text-blue-700 mb-2">Simulation Explanation</h3>
+                    <p id="ddosExplanation" class="text-sm text-blue-600">Adjust the sliders to see how the attack parameters affect the server.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Malware Attack Section -->
+        <section id="malware" class="mb-16">
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Malware: Malicious Software</h2>
+                <p class="text-gray-600 mb-6">Malware is software designed to disrupt, damage, or gain unauthorized access to a computer system.</p>
+                
+                <!-- Key Concepts for Malware -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-purple-50 p-4 rounded-lg">
+                        <h3 class="font-semibold text-purple-700 mb-2">What is a Computer Network?</h3>
+                        <p class="text-sm text-purple-600">A computer network is a group of connected computers that can communicate with each other. Think of it like a neighborhood where houses (computers) are connected by streets (network connections).</p>
+                        <div id="networkDemo" class="mt-4 h-32 bg-white rounded-lg flex items-center justify-center">
+                            <!-- Network visualization will go here -->
+                        </div>
+                    </div>
+                    <div class="bg-indigo-50 p-4 rounded-lg">
+                        <h3 class="font-semibold text-indigo-700 mb-2">What is Infection Rate?</h3>
+                        <p class="text-sm text-indigo-600">Infection rate is how quickly malware spreads from one computer to another. It's like how fast a cold might spread through a classroom.</p>
+                        <div id="infectionRateDemo" class="mt-4 h-32 bg-white rounded-lg flex items-center justify-center">
+                            <!-- Infection rate visualization will go here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Malware Simulation -->
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">Malware Propagation Simulation</h3>
+                <p class="text-gray-600 mb-6">Now let's see how malware spreads through a network of computers.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="infectionRate" class="block text-sm font-medium text-gray-700 mb-2">Infection Rate (%):</label>
+                        <input type="range" id="infectionRate" min="1" max="100" value="30" class="w-full">
+                        <span id="infectionRateValue" class="text-sm text-gray-600">30%</span>
+                    </div>
+                    <div>
+                        <label for="networkSize" class="block text-sm font-medium text-gray-700 mb-2">Network Size:</label>
+                        <input type="range" id="networkSize" min="10" max="100" value="50" class="w-full">
+                        <span id="networkSizeValue" class="text-sm text-gray-600">50 computers</span>
+                    </div>
+                </div>
+                <div id="malwareSimulationArea" class="relative h-80 bg-gray-200 rounded-lg overflow-hidden mb-6"></div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h3 class="font-semibold mb-2">Infected Computers</h3>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div id="infectedBar" class="bg-red-600 h-2.5 rounded-full" style="width: 0%"></div>
+                        </div>
+                        <span id="infectedValue" class="text-sm text-gray-600">0%</span>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h3 class="font-semibold mb-2">Time Elapsed</h3>
+                        <span id="timeElapsed" class="text-sm text-gray-600">0 seconds</span>
+                    </div>
+                </div>
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+                    <h3 class="font-semibold text-blue-700 mb-2">Simulation Explanation</h3>
+                    <p id="malwareExplanation" class="text-sm text-blue-600">Adjust the sliders to see how infection rate and network size affect malware spread.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ransomware Attack Section -->
+        <section id="ransomware" class="mb-16">
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Ransomware: Data Held Hostage</h2>
+                <p class="text-gray-600 mb-6">Ransomware is a type of malware that encrypts a victim's files and demands a ransom to restore access.</p>
+                
+                <!-- Key Concepts for Ransomware -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-pink-50 p-4 rounded-lg">
+                        <h3 class="font-semibold text-pink-700 mb-2">What is File Encryption?</h3>
+                        <p class="text-sm text-pink-600">Encryption is like putting files in a locked safe. Without the key (decryption code), you can't access the contents.</p>
+                        <div id="encryptionDemo" class="mt-4 h-32 bg-white rounded-lg flex items-center justify-center">
+                            <!-- Encryption visualization will go here -->
+                        </div>
+                    </div>
+                    <div class="bg-orange-50 p-4 rounded-lg">
+                        <h3 class="font-semibold text-orange-700 mb-2">What is Encryption Speed?</h3>
+                        <p class="text-sm text-orange-600">Encryption speed is how quickly ransomware can lock up files. Faster speeds mean less time to react and save files.</p>
+                        <div id="encryptionSpeedDemo" class="mt-4 h-32 bg-white rounded-lg flex items-center justify-center">
+                            <!-- Encryption speed visualization will go here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ransomware Simulation -->
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">Ransomware Attack Simulation</h3>
+                <p class="text-gray-600 mb-6">Let's observe how ransomware encrypts files on a system over time.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="encryptionSpeed" class="block text-sm font-medium text-gray-700 mb-2">Encryption Speed (files/sec):</label>
+                        <input type="range" id="encryptionSpeed" min="1" max="20" value="5" class="w-full">
+                        <span id="encryptionSpeedValue" class="text-sm text-gray-600">5 files/sec</span>
+                    </div>
+                    <div>
+                        <label for="fileCount" class="block text-sm font-medium text-gray-700 mb-2">Total Files:</label>
+                        <input type="range" id="fileCount" min="20" max="200" value="100" class="w-full">
+                        <span id="fileCountValue" class="text-sm text-gray-600">100 files</span>
+                    </div>
+                </div>
+                <div id="ransomwareSimulationArea" class="relative h-80 bg-gray-200 rounded-lg overflow-hidden mb-6"></div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h3 class="font-semibold mb-2">Encrypted Files</h3>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div id="encryptedBar" class="bg-red-600 h-2.5 rounded-full" style="width: 0%"></div>
+                        </div>
+                        <span id="encryptedValue" class="text-sm text-gray-600">0%</span>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h3 class="font-semibold mb-2">Time Elapsed</h3>
+                        <span id="ransomwareTimeElapsed" class="text-sm text-gray-600">0 seconds</span>
+                    </div>
+                </div>
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+                    <h3 class="font-semibold text-blue-700 mb-2">Simulation Explanation</h3>
+                    <p id="ransomwareExplanation" class="text-sm text-blue-600">Adjust the sliders to see how encryption speed and file count affect the ransomware attack.</p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Phishing Attack Section -->
+        <section id="phishing" class="mb-16">
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Phishing Attack</h2>
+                <p class="text-gray-600 mb-6">
+                    Phishing is a type of cyber attack where attackers trick users into providing sensitive information, such as usernames, passwords, or credit card details, by pretending to be a legitimate entity.
+                </p>
+                
+                <!-- Key Concepts for Phishing -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <h3 class="font-semibold text-blue-700 mb-2">What is Phishing?</h3>
+                        <p class="text-sm text-blue-600">
+                            Phishing is a form of social engineering where attackers send fraudulent messages designed to trick a victim into revealing sensitive information.
+                        </p>
+                        <div id="phishingDemo" class="mt-4 h-32 bg-white rounded-lg flex items-center justify-center">
+                            <div class="w-16 h-16 bg-blue-500 rounded-lg flex items-center justify-center text-white text-2xl">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <h3 class="font-semibold text-green-700 mb-2">How Does Phishing Work?</h3>
+                        <p class="text-sm text-green-600">
+                            Attackers send fake emails or messages that appear to be from trusted sources, tricking users into clicking malicious links or providing sensitive information.
+                        </p>
+                        <div id="phishingProcessDemo" class="mt-4 h-32 bg-white rounded-lg flex items-center justify-center">
+                            <div class="w-16 h-16 bg-green-500 rounded-lg flex items-center justify-center text-white text-2xl">
+                                <i class="fas fa-user-secret"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phishing Simulation -->
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">Phishing Attack Simulation</h3>
+                <p class="text-gray-600 mb-6">
+                    In this simulation, you will receive emails. Your task is to identify whether the email is legitimate or a phishing attempt.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="emailCount" class="block text-sm font-medium text-gray-700 mb-2">Number of Emails:</label>
+                        <input type="range" id="emailCount" min="5" max="20" value="10" class="w-full">
+                        <span id="emailCountValue" class="text-sm text-gray-600">10 emails</span>
+                    </div>
+                </div>
+                <div id="phishingSimulationArea" class="relative h-80 bg-gray-200 rounded-lg overflow-hidden mb-6 p-4">
+                    <!-- Emails will be dynamically added here -->
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h3 class="font-semibold mb-2">Correct Identifications</h3>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div id="correctBar" class="bg-green-500 h-2.5 rounded-full" style="width: 0%"></div>
+                        </div>
+                        <span id="correctValue" class="text-sm text-gray-600">0%</span>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h3 class="font-semibold mb-2">Incorrect Identifications</h3>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div id="incorrectBar" class="bg-red-500 h-2.5 rounded-full" style="width: 0%"></div>
+                        </div>
+                        <span id="incorrectValue" class="text-sm text-gray-600">0%</span>
+                    </div>
+                </div>
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+                    <h3 class="font-semibold text-blue-700 mb-2">Simulation Explanation</h3>
+                    <p id="phishingExplanation" class="text-sm text-blue-600">
+                        Identify whether each email is legitimate or a phishing attempt. Your accuracy will be displayed as you progress.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="mitm" class="mb-16">
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Man-in-the-Middle (MitM) Attack: Intercepting Communications</h2>
+                <p class="text-gray-600 mb-6">A Man-in-the-Middle (MitM) attack occurs when an attacker secretly relays and possibly alters the communications between two parties who believe they are directly communicating with each other.</p>
+                
+                <!-- Key Concepts for MitM -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <h3 class="font-semibold text-blue-700 mb-2">What is a MitM Attack?</h3>
+                        <p class="text-sm text-blue-600">In a MitM attack, the attacker intercepts communication between two parties, potentially eavesdropping or altering the data being exchanged.</p>
+                        <div id="mitmConceptDemo" class="mt-4 h-32 bg-white rounded-lg flex items-center justify-center">
+                            <!-- MitM concept visualization will go here -->
+                        </div>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <h3 class="font-semibold text-green-700 mb-2">How does encryption help?</h3>
+                        <p class="text-sm text-green-600">Encryption can protect against MitM attacks by making intercepted data unreadable to the attacker.</p>
+                        <div id="encryptionDemo" class="mt-4 h-32 bg-white rounded-lg flex items-center justify-center">
+                            <!-- Encryption visualization will go here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MitM Simulation -->
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">MitM Attack Simulation</h3>
+                <p class="text-gray-600 mb-6">Let's simulate a MitM attack and see how it affects data transmission.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="attackerCapability" class="block text-sm font-medium text-gray-700 mb-2">Attacker Capability:</label>
+                        <input type="range" id="attackerCapability" min="1" max="10" value="5" class="w-full">
+                        <span id="attackerCapabilityValue" class="text-sm text-gray-600">5</span>
+                    </div>
+                    <div>
+                        <label for="encryptionLevel" class="block text-sm font-medium text-gray-700 mb-2">Encryption Level:</label>
+                        <input type="range" id="encryptionLevel" min="1" max="10" value="5" class="w-full">
+                        <span id="encryptionLevelValue" class="text-sm text-gray-600">5</span>
+                    </div>
+                </div>
+                <div id="mitmSimulationArea" class="relative h-80 bg-gray-200 rounded-lg overflow-hidden mb-6">
+                    <div id="sender" class="absolute left-4 top-1/2 transform -translate-y-1/2 w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">Sender</div>
+                    <div id="receiver" class="absolute right-4 top-1/2 transform -translate-y-1/2 w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white font-bold">Receiver</div>
+                    <div id="attacker" class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-red-500 rounded-full flex items-center justify-center text-white font-bold">Attacker</div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h3 class="font-semibold mb-2">Intercepted Data Packets</h3>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div id="interceptedPacketsBar" class="bg-red-600 h-2.5 rounded-full" style="width: 0%"></div>
+                        </div>
+                        <span id="interceptedPacketsValue" class="text-sm text-gray-600">0%</span>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h3 class="font-semibold mb-2">Secure Transmissions</h3>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div id="secureTransmissionsBar" class="bg-green-600 h-2.5 rounded-full" style="width: 0%"></div>
+                        </div>
+                        <span id="secureTransmissionsValue" class="text-sm text-gray-600">0%</span>
+                    </div>
+                </div>
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+                    <h3 class="font-semibold text-blue-700 mb-2">Simulation Explanation</h3>
+                    <p id="mitmExplanation" class="text-sm text-blue-600">Adjust the sliders to see how attacker capability and encryption level affect the success of MitM attacks.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SQL Simulation -->
+
+        <!-- SQL Injection Attack Simulation -->
+<section id="sql-injection" class="mb-16">
+    <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-3xl font-bold text-gray-800 mb-4">SQL Injection: Exploiting Database Vulnerabilities</h2>
+        <p class="text-gray-600 mb-6">SQL Injection is a code injection technique that exploits a security vulnerability in an application's software by manipulating SQL queries.</p>
+        
+        <!-- Key Concepts for SQL Injection -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-yellow-50 p-4 rounded-lg">
+                <h3 class="font-semibold text-yellow-700 mb-2">What is SQL Injection?</h3>
+                <p class="text-sm text-yellow-600">SQL Injection allows attackers to interfere with the queries that an application makes to its database, potentially allowing them to view, modify, or delete data.</p>
+                <div id="sqlInjectionDemo" class="mt-4 h-32 bg-white rounded-lg flex items-center justify-center overflow-hidden">
+                    <!-- SQL Injection visualization will go here -->
+                </div>
+            </div>
+            <div class="bg-green-50 p-4 rounded-lg">
+                <h3 class="font-semibold text-green-700 mb-2">How to Prevent SQL Injection?</h3>
+                <p class="text-sm text-green-600">Prevention involves using parameterized queries, stored procedures, and input validation to ensure that user input cannot alter SQL queries.</p>
+                <div id="preventionDemo" class="mt-4 h-32 bg-white rounded-lg flex items-center justify-center">
+                    <!-- Prevention techniques visualization will go here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- SQL Injection Simulation -->
+        <h3 class="text-2xl font-bold text-gray-800 mb-4">SQL Injection Attack Simulation</h3>
+        <p class="text-gray-600 mb-6">Let's simulate various SQL Injection attacks and see how security levels affect the success rate.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div>
+                <label for="securityLevel" class="block text-sm font-medium text-gray-700 mb-2">Security Level:</label>
+                <input type="range" id="securityLevel" min="1" max="10" value="5" class="w-full">
+                <span id="securityLevelValue" class="text-sm text-gray-600">5</span>
+            </div>
+            <div>
+                <label for="attackComplexity" class="block text-sm font-medium text-gray-700 mb-2">Attack Complexity:</label>
+                <input type="range" id="attackComplexity" min="1" max="10" value="5" class="w-full">
+                <span id="attackComplexityValue" class="text-sm text-gray-600">5</span>
+            </div>
+        </div>
+        <div id="sqlInjectionSimulationArea" class="bg-gray-800 text-green-400 p-4 rounded-lg mb-6 h-60 overflow-auto code-font">
+            <!-- SQL Injection simulation output will go here -->
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="bg-gray-50 p-4 rounded-lg">
+                <h3 class="font-semibold mb-2">Successful Injections</h3>
+                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                    <div id="successfulInjectionsBar" class="bg-red-600 h-2.5 rounded-full" style="width: 0%"></div>
+                </div>
+                <span id="successfulInjectionsValue" class="text-sm text-gray-600">0%</span>
+            </div>
+            <div class="bg-gray-50 p-4 rounded-lg">
+                <h3 class="font-semibold mb-2">Prevented Injections</h3>
+                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                    <div id="preventedInjectionsBar" class="bg-green-600 h-2.5 rounded-full" style="width: 0%"></div>
+                </div>
+                <span id="preventedInjectionsValue" class="text-sm text-gray-600">0%</span>
+            </div>
+        </div>
+        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+            <h3 class="font-semibold text-blue-700 mb-2">Simulation Explanation</h3>
+            <p id="sqlInjectionExplanation" class="text-sm text-blue-600">Adjust the sliders to see how security levels and attack complexity affect the success of SQL Injection attacks.</p>
+        </div>
+    </div>
+</section>
+
+        <!-- XSS Simulation -->
+        <section id="xss" class="mb-16">
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Cross-Site Scripting (XSS): Injecting Malicious Scripts</h2>
+                <p class="text-gray-600 mb-6">Cross-Site Scripting (XSS) is a type of attack where malicious scripts are injected into trusted websites. These scripts can steal user data, such as cookies, or perform unauthorized actions on behalf of the user.</p>
+                
+                <!-- Key Concepts for XSS -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-yellow-50 p-4 rounded-lg">
+                        <h3 class="font-semibold text-yellow-700 mb-2">What is XSS?</h3>
+                        <p class="text-sm text-yellow-600">XSS attacks occur when an attacker injects malicious scripts into a website, which are then executed in the browser of unsuspecting users.</p>
+                        <div id="xssConceptDemo" class="mt-4 h-32 bg-white rounded-lg flex items-center justify-center overflow-hidden">
+                            <!-- XSS concept visualization will go here -->
+                        </div>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <h3 class="font-semibold text-green-700 mb-2">How to Prevent XSS?</h3>
+                        <p class="text-sm text-green-600">Preventing XSS involves sanitizing user inputs, escaping special characters, and implementing Content Security Policies (CSP).</p>
+                        <div id="xssPreventionDemo" class="mt-4 h-32 bg-white rounded-lg flex items-center justify-center">
+                            <!-- XSS prevention visualization will go here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- XSS Simulation -->
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">XSS Attack Simulation</h3>
+                <p class="text-gray-600 mb-6">Let's simulate an XSS attack and see how malicious scripts can affect a website.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="inputSanitization" class="block text-sm font-medium text-gray-700 mb-2">Input Sanitization Level:</label>
+                        <input type="range" id="inputSanitization" min="1" max="10" value="5" class="w-full">
+                        <span id="inputSanitizationValue" class="text-sm text-gray-600">5</span>
+                    </div>
+                    <div>
+                        <label for="scriptSophistication" class="block text-sm font-medium text-gray-700 mb-2">Script Sophistication:</label>
+                        <input type="range" id="scriptSophistication" min="1" max="10" value="5" class="w-full">
+                        <span id="scriptSophisticationValue" class="text-sm text-gray-600">5</span>
+                    </div>
+                </div>
+                <div id="xssSimulationArea" class="bg-gray-800 text-green-400 p-4 rounded-lg mb-6 h-60 overflow-auto code-font">
+                    <!-- XSS simulation output will go here -->
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h3 class="font-semibold mb-2">Successful XSS Attacks</h3>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div id="successfulXssBar" class="bg-red-600 h-2.5 rounded-full" style="width: 0%"></div>
+                        </div>
+                        <span id="successfulXssValue" class="text-sm text-gray-600">0%</span>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h3 class="font-semibold mb-2">Blocked Attempts</h3>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div id="blockedAttemptsBar" class="bg-green-600 h-2.5 rounded-full" style="width: 0%"></div>
+                        </div>
+                        <span id="blockedAttemptsValue" class="text-sm text-gray-600">0%</span>
+                    </div>
+                </div>
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+                    <h3 class="font-semibold text-blue-700 mb-2">Simulation Explanation</h3>
+                    <p id="xssExplanation" class="text-sm text-blue-600">Adjust the sliders to see how input sanitization and script sophistication affect the success of XSS attacks.</p>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- Credential Stuffing Attack Simulation -->
+        <section id="credential-stuffing" class="mb-16">
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Credential Stuffing: Exploiting Reused Passwords</h2>
+                <p class="text-gray-600 mb-6">Credential stuffing is a type of cyberattack where stolen account credentials typically consisting of lists of usernames and/or email addresses and the corresponding passwords are used to gain unauthorized access to user accounts through large-scale automated login requests directed against a web application.</p>
+                
+                <!-- Key Concepts for Credential Stuffing -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-yellow-50 p-4 rounded-lg">
+                        <h3 class="font-semibold text-yellow-700 mb-2">What is Credential Stuffing?</h3>
+                        <p class="text-sm text-yellow-600">Credential stuffing uses stolen username and password pairs to attempt to log in to various websites, exploiting users who reuse the same credentials across multiple sites.</p>
+                        <div id="credentialStuffingDemo" class="mt-4 h-32 bg-white rounded-lg flex items-center justify-center overflow-hidden">
+                            <!-- Credential Stuffing visualization will go here -->
+                        </div>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <h3 class="font-semibold text-green-700 mb-2">How to Prevent Credential Stuffing?</h3>
+                        <p class="text-sm text-green-600">Prevention methods include using unique passwords, implementing multi-factor authentication, and employing anti-automation techniques.</p>
+                        <div id="preventionDemo" class="mt-4 h-32 bg-white rounded-lg flex items-center justify-center">
+                            <!-- Prevention techniques visualization will go here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Credential Stuffing Simulation -->
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">Credential Stuffing Attack Simulation</h3>
+                <p class="text-gray-600 mb-6">Let's simulate a credential stuffing attack and see how it can be used to gain unauthorized access to user accounts.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="securityLevel" class="block text-sm font-medium text-gray-700 mb-2">Website Security Level:</label>
+                        <input type="range" id="securityLevel" min="1" max="10" value="5" class="w-full">
+                        <span id="securityLevelValue" class="text-sm text-gray-600">5</span>
+                    </div>
+                    <div>
+                        <label for="credentialListSize" class="block text-sm font-medium text-gray-700 mb-2">Stolen Credential List Size:</label>
+                        <input type="range" id="credentialListSize" min="100" max="10000" step="100" value="1000" class="w-full">
+                        <span id="credentialListSizeValue" class="text-sm text-gray-600">1000</span>
+                    </div>
+                </div>
+                <div id="credentialStuffingSimulationArea" class="bg-gray-800 text-green-400 p-4 rounded-lg mb-6 h-60 overflow-auto code-font">
+                    <!-- Credential Stuffing simulation output will go here -->
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h3 class="font-semibold mb-2">Successful Account Breaches</h3>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div id="successfulBreachesBar" class="bg-red-600 h-2.5 rounded-full" style="width: 0%"></div>
+                        </div>
+                        <span id="successfulBreachesValue" class="text-sm text-gray-600">0%</span>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h3 class="font-semibold mb-2">Prevented Attempts</h3>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div id="preventedAttemptsBar" class="bg-green-600 h-2.5 rounded-full" style="width: 0%"></div>
+                        </div>
+                        <span id="preventedAttemptsValue" class="text-sm text-gray-600">0%</span>
+                    </div>
+                </div>
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+                    <h3 class="font-semibold text-blue-700 mb-2">Simulation Explanation</h3>
+                    <p id="credentialStuffingExplanation" class="text-sm text-blue-600">Adjust the sliders to see how website security and the size of the stolen credential list affect the success of credential stuffing attacks.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Social Engineering Attack Simulation -->
+        <section id="social-engineering" class="mb-16">
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Social Engineering: Manipulating Human Psychology</h2>
+                <p class="text-gray-600 mb-6">Social engineering is the art of manipulating people into giving up confidential information or performing actions that may compromise security. These attacks rely on human psychology rather than technical hacking techniques.</p>
+                
+                <!-- Key Concepts for Social Engineering -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-yellow-50 p-4 rounded-lg">
+                        <h3 class="font-semibold text-yellow-700 mb-2">What is Social Engineering?</h3>
+                        <p class="text-sm text-yellow-600">Social engineering exploits human psychology to trick individuals into divulging sensitive information or granting access to secure systems.</p>
+                        <div id="socialEngineeringDemo" class="mt-4 h-32 bg-white rounded-lg flex items-center justify-center overflow-hidden">
+                            <!-- Social Engineering visualization will go here -->
+                        </div>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <h3 class="font-semibold text-green-700 mb-2">How to Prevent Social Engineering?</h3>
+                        <p class="text-sm text-green-600">Prevention involves employee education, implementing strict security policies, and fostering a culture of security awareness.</p>
+                        <div id="preventionDemo" class="mt-4 h-32 bg-white rounded-lg flex items-center justify-center">
+                            <!-- Prevention techniques visualization will go here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social Engineering Simulation -->
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">Social Engineering Attack Simulation</h3>
+                <p class="text-gray-600 mb-6">Let's simulate various social engineering attacks and see how employee awareness affects the success rate.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="employeeAwareness" class="block text-sm font-medium text-gray-700 mb-2">Employee Security Awareness:</label>
+                        <input type="range" id="employeeAwareness" min="1" max="10" value="5" class="w-full">
+                        <span id="employeeAwarenessValue" class="text-sm text-gray-600">5</span>
+                    </div>
+                    <div>
+                        <label for="attackSophistication" class="block text-sm font-medium text-gray-700 mb-2">Attack Sophistication:</label>
+                        <input type="range" id="attackSophistication" min="1" max="10" value="5" class="w-full">
+                        <span id="attackSophisticationValue" class="text-sm text-gray-600">5</span>
+                    </div>
+                </div>
+                <div id="socialEngineeringSimulationArea" class="bg-gray-800 text-green-400 p-4 rounded-lg mb-6 h-60 overflow-auto code-font">
+                    <!-- Social Engineering simulation output will go here -->
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h3 class="font-semibold mb-2">Successful Attacks</h3>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div id="successfulAttacksBar" class="bg-red-600 h-2.5 rounded-full" style="width: 0%"></div>
+                        </div>
+                        <span id="successfulAttacksValue" class="text-sm text-gray-600">0%</span>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h3 class="font-semibold mb-2">Prevented Attempts</h3>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div id="preventedAttemptsBar" class="bg-green-600 h-2.5 rounded-full" style="width: 0%"></div>
+                        </div>
+                        <span id="preventedAttemptsValue" class="text-sm text-gray-600">0%</span>
+                    </div>
+                </div>
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+                    <h3 class="font-semibold text-blue-700 mb-2">Simulation Explanation</h3>
+                    <p id="socialEngineeringExplanation" class="text-sm text-blue-600">Adjust the sliders to see how employee awareness and attack sophistication affect the success of social engineering attacks.</p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Zero-Day Attack Simulation -->
+        <section id="zero-day" class="mb-16">
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Zero-Day Exploit: Exploiting Unknown Vulnerabilities</h2>
+                <p class="text-gray-600 mb-6">A Zero-Day Exploit is a cyberattack that targets a software vulnerability that is unknown to the software vendor or has not yet been patched. These attacks are highly dangerous as they exploit vulnerabilities before they are discovered and fixed.</p>
+                
+                <!-- Key Concepts for Zero-Day Exploit -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-yellow-50 p-4 rounded-lg">
+                        <h3 class="font-semibold text-yellow-700 mb-2">What is a Zero-Day Exploit?</h3>
+                        <p class="text-sm text-yellow-600">A Zero-Day Exploit takes advantage of a software vulnerability that is unknown to the vendor, leaving no time for a patch or fix to be developed before the attack occurs.</p>
+                        <div id="zeroDayDemo" class="mt-4 h-32 bg-white rounded-lg flex items-center justify-center overflow-hidden">
+                            <!-- Zero-Day visualization will go here -->
+                        </div>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <h3 class="font-semibold text-green-700 mb-2">How to Mitigate Zero-Day Exploits?</h3>
+                        <p class="text-sm text-green-600">Mitigation strategies include using intrusion detection systems, applying security patches promptly, and employing behavior-based threat detection.</p>
+                        <div id="mitigationDemo" class="mt-4 h-32 bg-white rounded-lg flex items-center justify-center">
+                            <!-- Mitigation techniques visualization will go here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Zero-Day Exploit Simulation -->
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">Zero-Day Exploit Simulation</h3>
+                <p class="text-gray-600 mb-6">Let's simulate a Zero-Day Exploit attack and see how it can exploit unknown vulnerabilities in a system.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="systemVulnerability" class="block text-sm font-medium text-gray-700 mb-2">System Vulnerability Level:</label>
+                        <input type="range" id="systemVulnerability" min="1" max="10" value="5" class="w-full">
+                        <span id="systemVulnerabilityValue" class="text-sm text-gray-600">5</span>
+                    </div>
+                    <div>
+                        <label for="exploitSophistication" class="block text-sm font-medium text-gray-700 mb-2">Exploit Sophistication:</label>
+                        <input type="range" id="exploitSophistication" min="1" max="10" value="5" class="w-full">
+                        <span id="exploitSophisticationValue" class="text-sm text-gray-600">5</span>
+                    </div>
+                </div>
+                <div id="zeroDaySimulationArea" class="bg-gray-800 text-green-400 p-4 rounded-lg mb-6 h-60 overflow-auto code-font">
+                    <!-- Zero-Day Exploit simulation output will go here -->
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h3 class="font-semibold mb-2">Successful Exploits</h3>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div id="successfulExploitsBar" class="bg-red-600 h-2.5 rounded-full" style="width: 0%"></div>
+                        </div>
+                        <span id="successfulExploitsValue" class="text-sm text-gray-600">0%</span>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h3 class="font-semibold mb-2">Prevented Exploits</h3>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div id="preventedExploitsBar" class="bg-green-600 h-2.5 rounded-full" style="width: 0%"></div>
+                        </div>
+                        <span id="preventedExploitsValue" class="text-sm text-gray-600">0%</span>
+                    </div>
+                </div>
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+                    <h3 class="font-semibold text-blue-700 mb-2">Simulation Explanation</h3>
+                    <p id="zeroDayExplanation" class="text-sm text-blue-600">Adjust the sliders to see how system vulnerability and exploit sophistication affect the success of Zero-Day Exploit attacks.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+    <footer class="bg-gray-800 text-white py-6 mt-12">
+        <div class="container mx-auto px-4">
+            <p class="text-center">© 2023 Cybersecurity Simulations. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="credential.js"></script> 
+    <script src="ddos.js"></script> 
+    <script src="MitM.js"></script> 
+    <script src="phishing.js"></script> 
+    <script src="social.js"></script> 
+    <script src="SQL.js"></script> 
+    <script src="XSS.js"></script> 
+    <script src="zeroday.js"></script> 
+</body>
+</html>
