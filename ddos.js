@@ -1,5 +1,5 @@
- // DDoS Concept Demonstrations
- function demonstrateServerLoad() {
+// DDoS Concept Demonstrations
+function demonstrateServerLoad() {
     const loadBar = document.getElementById('loadBar');
     let load = 0;
     const loadInterval = setInterval(() => {
@@ -7,11 +7,7 @@
         loadBar.style.width = `${load}%`;
         if (load >= 100) {
             clearInterval(loadInterval);
-            setTimeout(() => {
-                load = 0;
-                loadBar.style.width = '0%';
-                demonstrateServerLoad();
-            }, 1000);
+            setTimeout(() => demonstrateServerLoad(), 1000);
         }
     }, 200);
 }
@@ -141,6 +137,12 @@ function animateDDoS() {
     ddosAnimationId = requestAnimationFrame(animateDDoS);
 }
 
+packetRateSlider.addEventListener('input', updateDDoSSimulation);
+attackerCountSlider.addEventListener('input', updateDDoSSimulation);
+
+// Initial DDoS simulation update
+updateDDoSSimulation();
+
 // Malware Concept Demonstrations
 function demonstrateNetwork() {
     const networkDemo = document.getElementById('networkDemo');
@@ -159,7 +161,7 @@ function demonstrateInfectionRate() {
     const infectionRateDemo = document.getElementById('infectionRateDemo');
     infectionRateDemo.innerHTML = ''; // Clear existing demonstration
     const totalComputers = 10;
-    
+
     for (let i = 0; i < totalComputers; i++) {
         const computer = document.createElement('div');
         computer.className = 'w-4 h-4 bg-green-500 rounded-full inline-block mx-1';
@@ -173,13 +175,7 @@ function demonstrateInfectionRate() {
             infectedCount++;
         } else {
             clearInterval(infectionInterval);
-            setTimeout(() => {
-                infectedCount = 0;
-                Array.from(infectionRateDemo.children).forEach(comp => {
-                    comp.className = 'w-4 h-4 bg-green-500 rounded-full inline-block mx-1';
-                });
-                demonstrateInfectionRate();
-            }, 1000);
+            setTimeout(() => demonstrateInfectionRate(), 1000);
         }
     }, 500);
 }
@@ -264,6 +260,12 @@ function runMalwareSimulation() {
     }, 1000);
 }
 
+infectionRateSlider.addEventListener('input', updateMalwareSimulation);
+networkSizeSlider.addEventListener('input', updateMalwareSimulation);
+
+// Initial malware simulation update
+updateMalwareSimulation();
+
 // Ransomware Concept Demonstrations
 function demonstrateEncryption() {
     const encryptionDemo = document.getElementById('encryptionDemo');
@@ -298,13 +300,7 @@ function demonstrateEncryptionSpeed() {
             encryptedFiles++;
         } else {
             clearInterval(encryptionInterval);
-            setTimeout(() => {
-                encryptedFiles = 0;
-                Array.from(encryptionSpeedDemo.children).forEach(file => {
-                    file.className = 'w-4 h-5 bg-blue-500 rounded inline-block mx-1';
-                });
-                demonstrateEncryptionSpeed();
-            }, 1000);
+            setTimeout(() => demonstrateEncryptionSpeed(), 1000);
         }
     }, 300);
 }
@@ -379,13 +375,11 @@ function runRansomwareSimulation() {
     }, 1000);
 }
 
-// Event listeners
-packetRateSlider.addEventListener('input', updateDDoSSimulation);
-attackerCountSlider.addEventListener('input', updateDDoSSimulation);
-infectionRateSlider.addEventListener('input', updateMalwareSimulation);
-networkSizeSlider.addEventListener('input', updateMalwareSimulation);
 encryptionSpeedSlider.addEventListener('input', updateRansomwareSimulation);
 fileCountSlider.addEventListener('input', updateRansomwareSimulation);
+
+// Initial ransomware simulation update
+updateRansomwareSimulation();
 
 // Use Intersection Observer to trigger demonstrations when sections come into view
 const sections = document.querySelectorAll('section');
@@ -417,7 +411,7 @@ const sectionObserver = new IntersectionObserver((entries) => {
 
 sections.forEach(section => {
     sectionObserver.observe(section);
-});
+}); 
 
 // Start only DDoS demonstrations when the page loads
 document.addEventListener('DOMContentLoaded', () => {
